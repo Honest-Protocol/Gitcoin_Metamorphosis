@@ -18,7 +18,10 @@ def get_domain_ip_adresses(domain):
     return ip_addresses
 
 def main():
-    print()
+    with open('domains.json') as f:
+        domains = json.load(f)
+        for domain in domains:
+            print(domain)
 
 
 if __name__ == "__main__":
