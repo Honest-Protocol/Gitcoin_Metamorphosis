@@ -12,6 +12,10 @@ def check_is_domain_up(domain):
         print(f"Exception for domain: {domain}")
         return False
 
+
+def get_domain_ip_adresses(domain):
+    return socket.gethostbyname(domain)
+
 def main():
     print()
 
