@@ -20,6 +20,13 @@ def get_domain_text_content(domain):
     else:
         return ""
 
+def get_last_modified_header(domain):
+    response = requests.get("http://" + domain, allow_redirects=True)
+    if response.status_code == 200:
+        return response.headers.get("last-modified")
+    else:
+        return None
+
 def get_domain_ip_adresses(domain):
     _, __, ip_addresses = socket.gethostbyname_ex(domain)
     return ip_addresses
