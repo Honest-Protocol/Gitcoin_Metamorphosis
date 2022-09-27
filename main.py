@@ -12,6 +12,13 @@ def check_is_domain_up(domain):
         print(f"Exception for domain: {domain}")
         return False
 
+def get_domain_text_content(domain):
+    response = requests.get("http://" + domain, allow_redirects=True)
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.content, 'html.parser')
+        return " ".join(soup.text.split())
+    else:
+        return ""
 
 def get_domain_ip_adresses(domain):
     _, __, ip_addresses = socket.gethostbyname_ex(domain)
