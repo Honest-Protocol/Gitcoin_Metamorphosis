@@ -14,7 +14,8 @@ def check_is_domain_up(domain):
 
 
 def get_domain_ip_adresses(domain):
-    return socket.gethostbyname(domain)
+    _, __, ip_addresses = socket.gethostbyname_ex(domain)
+    return ip_addresses
 
 def main():
     print()
