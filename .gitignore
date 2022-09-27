@@ -165,6 +165,7 @@ address.json
 domains.json
 *.ipynb
 *.csv
+!output/domains-sample.csv
 
 output/domains.csv
 output/htmls/*.html
