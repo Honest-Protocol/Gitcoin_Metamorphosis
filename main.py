@@ -2,6 +2,13 @@ import json
 import socket
 import requests
 from bs4 import BeautifulSoup
+from nltk.tokenize import RegexpTokenizer
+import nltk
+from nltk.corpus import stopwords
+from nltk.probability import FreqDist
+from nltk.tokenize import word_tokenize
+nltk.download('stopwords')
+nltk.download('punkt')
 
 
 def check_is_domain_up(domain):
@@ -40,7 +47,7 @@ def remove_punctuation_and_stopwords(text):
 
 def main():
     with open(f"output/domains.csv", "w") as file:
-        file.write(f"domain,is_up,ip_addresses,has_robots_file,text_processed\n")
+        file.write(f"domain,is_up,ip_addresses,has_robots_file,most_common_words,text_processed\n")
 
     with open('domains.json') as f:
         domains = json.load(f)
@@ -55,9 +62,13 @@ def main():
             text = get_domain_text_content(domain)
             text = remove_punctuation_and_stopwords(text)
             has_robots_file = check_is_domain_up(domain + "/robots.txt")
+            words_dist = FreqDist()
+            for word in word_tokenize(text):
+                words_dist[word.lower()] += 1
+            most_common_words = words_dist.most_common(15)
 
             with open("output/domains.csv", "a") as file:
-                file.write(f"{domain},{is_up},{str(ip_addresses)},{has_robots_file},{text}\n")
+                file.write(f"{domain},{is_up},{str(ip_addresses)},{has_robots_file},{str(most_common_words)},{text}\n")
 
 
 if __name__ == "__main__":
