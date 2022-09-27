@@ -70,6 +70,9 @@ def main():
             with open("output/domains.csv", "a") as file:
                 file.write(f"{domain},{is_up},{str(ip_addresses)},{has_robots_file},{str(most_common_words)},{text}\n")
 
+            # Save HTML to a file
+            with open(f"output/htmls/{domain}.html", "w") as file:
+                file.write(response.text)
 
 if __name__ == "__main__":
     """ This is executed when run from the command line """
