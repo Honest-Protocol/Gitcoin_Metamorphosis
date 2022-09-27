@@ -1,4 +1,16 @@
 import json
+import socket
+import requests
+from bs4 import BeautifulSoup
+
+
+def check_is_domain_up(domain):
+    try:
+        response = requests.head("http://" + domain, allow_redirects=True)
+        return response.status_code == 200
+    except requests.exceptions.ConnectionError:
+        print(f"Exception for domain: {domain}")
+        return False
 
 def main():
     print()
